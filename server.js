@@ -20,6 +20,10 @@ app.use('/shops', shops);
 app.use('/donuts', donuts);
 app.use('/employees', employees);
 
+app.get('/', (req, res) => {
+  res.send('hello world');
+});
+
 // routes not found
 app.use((req, res) => {
   res.sendStatus(404);
@@ -40,3 +44,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
+
+module.exports = app;

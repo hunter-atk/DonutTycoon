@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 3000;
 
 const bodyParser = require('body-parser');
 
+const ejs = require('ejs');
+
 const shops = require('./routes/shops');
 const donuts = require('./routes/donuts');
 const employees = require('./routes/employees');
@@ -14,6 +16,9 @@ const employees = require('./routes/employees');
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+
+// configure ejs for templating
+app.set('view engine', 'ejs');
 
 // middlewear routers
 app.use('/shops', shops);

@@ -1,5 +1,10 @@
 <%- include ../partials/mainHead.ejs %>
 
-this is the index page for shops
+<h2>All Shops</h2>
+<ul>
+  <% shops.forEach(function(shop) { %>
+    <li><%= shop.name %> - <%= shop.city %></li>
+  <% }) %>
+</ul>
 
 <%- include ../partials/mainFoot.ejs %>

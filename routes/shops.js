@@ -20,20 +20,28 @@ router.get('/new', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   knex('shops')
+  .where({id: req.params.id})
+  .first() // NEED TO DO FIRST - to get from array to object
+  .then((data) => {
+    res.status(200).render('shops/show', {shop: data});
+  })
+  .catch((err) => {
+    next(err);
+  });
+});
+
+router.get('/:id/edit', (req, res, next) => {
+  knex('shops')
     .where({id: req.params.id})
-    .first() // NEED TO DO FIRST - to get from array to object
+    .first()
     .then((data) => {
-      res.status(200).render('shops/show', {shop: data});
+      res.status(200).render('shops/edit', {shop: data});
     })
     .catch((err) => {
       next(err);
     });
-});
 
 
-
-router.get('/:id/edit', (req, res, next) => {
-  res.render('shops/edit');
 });
 
 module.exports = router;

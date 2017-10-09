@@ -56,13 +56,20 @@ describe("GET /shops/:id", function() {
 });
 
 describe("GET /shops/:id/edit", function() {
-  it('should contain the text "edit"', function(done) {
-    request.get('/shops/1/edit')
+  before(function(){
+    knex('shops').del().then(() => null);
+    knex('shops').insert(SHOP).then(() => null);
+  });
+  it('should display edit form with current values', function(done) {
+    request.get('/shops/3/edit')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      expect(res.text).to.contain('random');
+      expect(res.text).to.contain('Name:');
+      expect(res.text).to.contain('Crunkin Cronuts');
+      expect(res.text).to.contain('City:');
+      expect(res.text).to.contain('New York');
       done();
     });
   });

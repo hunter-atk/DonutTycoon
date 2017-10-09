@@ -76,13 +76,20 @@ describe("GET /shops/:id/edit", function() {
 });
 
 describe("PATCH /shops/:id", function() {
-  it('should redirect to shops/:id', function(done) {
+  before(function(){
+    knex('shops').del().then(() => null);
+    knex('shops').insert(SHOP).then(() => null);
+  });
+  it('should redirect to shops/:id with updates made to entry', function(done) {
     request.patch('/shops/1')
+    .send({ name: 'Shrunkin Shronuts'})
+    // .field('name', 'Shrunkin Shronuts')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      expect(res.text).to.contain('random');
+      expect(res.text).to.contain('Shrunkin Shronuts');
+      expect(res.text).to.contain('New York');
       done();
     });
   });

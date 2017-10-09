@@ -21,6 +21,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.1",
     "knex": "^0.13.0",
+    "method-override": "^2.3.10",
     "pg": "^7.3.0"
   },
   "devDependencies": {

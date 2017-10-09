@@ -1,6 +1,9 @@
 /*jshint esversion: 6 */
 
+// TODO - for user login, cookie parser, cookie session
+
 const express = require('express');
+const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -11,6 +14,9 @@ const ejs = require('ejs');
 const shops = require('./routes/shops');
 const donuts = require('./routes/donuts');
 const employees = require('./routes/employees');
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

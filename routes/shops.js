@@ -4,7 +4,7 @@ const router = express.Router();
 
 const knex = require('../db/knex');
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   knex('shops')
     .then((data) => {
       res.status(200).render('shops/index', {shops: data});
@@ -14,26 +14,25 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/api', (req, res) => {
+router.get('/new', (req, res, next) => {
+  res.render('shops/new');
+});
+
+router.get('/:id', (req, res, next) => {
   knex('shops')
-    .then((shops) => {
-      res.status(200).json(shops);
+    .where({id: req.params.id})
+    .first() // NEED TO DO FIRST - to get from array to object
+    .then((data) => {
+      res.status(200).render('shops/show', {shop: data});
     })
     .catch((err) => {
       next(err);
     });
 });
 
-router.get('/new', (req, res) => {
-  res.render('shops/new');
-});
-
-router.get('/:id', (req, res) => {
-  res.render('shops/show');
-});
 
 
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', (req, res, next) => {
   res.render('shops/edit');
 });
 

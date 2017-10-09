@@ -12,7 +12,7 @@ const SHOPS = [
   {id: 1, name: "Jim Freeze", city: 'Cleveland'},
   {id: 2, name: 'Krunchy Kreme', city: 'Denver'}
 ];
-const SHOP = {id: 1, name: "Jim Freeze", city: 'Cleveland'};
+const SHOP = {id: 3, name: "Crunkin Cronuts", city: 'New York'};
 
 // runs after each test in this block
 afterEach(function() {
@@ -21,7 +21,7 @@ afterEach(function() {
 
 describe("GET /shops", function() {
   before(function(){
-    knex('shops').del();
+    knex('shops').del().then(() => null);
     knex('shops').insert(SHOPS).then(() => null);
   });
   it('should display all shop names', function(done) {
@@ -38,13 +38,18 @@ describe("GET /shops", function() {
 });
 
 describe("GET /shops/:id", function() {
-  it('should contain the text "show"', function(done) {
-    request.get('/shops/1')
+  before(function(){
+    knex('shops').del().then(() => null);
+    knex('shops').insert(SHOP).then(() => null);
+  });
+  it('should display info for selected shop', function(done) {
+    request.get('/shops/3')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      expect(res.text).to.contain('random');
+      expect(res.text).to.contain('Crunkin Cronuts');
+      expect(res.text).to.contain('New York');
       done();
     });
   });

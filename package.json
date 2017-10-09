@@ -4,7 +4,7 @@
   "description": "crud app for donut chain",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV mocha"
+    "test": "NODE_ENV=test mocha"
   },
   "repository": {
     "type": "git",

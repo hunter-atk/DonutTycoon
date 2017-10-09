@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-process.env.PORT = 3000;
+process.env.PORT = 3030;
 
 const expect = require('chai').expect;
 const server = require('../server');

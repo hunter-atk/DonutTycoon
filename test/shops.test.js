@@ -15,9 +15,9 @@ const SHOPS = [
 const SHOP = {id: 3, name: "Crunkin Cronuts", city: 'New York'};
 
 // runs after each test in this block
-afterEach(function() {
-  knex('shops').del().then(() => null);
-});
+// afterEach(function() {
+//   knex('shops').del().then(() => null);
+// });
 
 describe("GET /shops", function() {
   before(function(){
@@ -80,16 +80,28 @@ describe("PATCH /shops/:id", function() {
     knex('shops').del().then(() => null);
     knex('shops').insert(SHOP).then(() => null);
   });
-  it('should redirect to shops/:id with updates made to entry', function(done) {
-    request.patch('/shops/1')
-    .send({ name: 'Shrunkin Shronuts'})
-    // .field('name', 'Shrunkin Shronuts')
+
+  it('should redirect to shops/:id', function(done) {
+    request.patch('/shops/3')
+    .send({ name: 'Shrunkin Shronuts', city: 'Hotlanta'})
+    .expect('Content-Type', /text\/plain/)  // based on redirect
+    .expect(302)
+    .expect('Location', '/shops/3')  // redirect to the show page for edited shop
+    .end(function(err, res) {
+      if (err) throw err;
+      done();
+    });
+  });
+
+  // needed to check the content AFTER redirect, looking at the results on the show page
+  it('shops/:id should include the updates that were made', function(done) {
+    request.get('/shops/3')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
       expect(res.text).to.contain('Shrunkin Shronuts');
-      expect(res.text).to.contain('New York');
+      expect(res.text).to.contain('Hotlanta');
       done();
     });
   });

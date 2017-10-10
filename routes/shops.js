@@ -40,7 +40,9 @@ router.get('/new', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   knex('shops')
-  .where({id: req.params.id})
+  .where({
+    id: req.params.id
+  })
   .first() // NEED TO DO FIRST - to get from array to object
   .then((data) => {
     res.status(200).render('shops/show', {shop: data});
@@ -53,7 +55,9 @@ router.get('/:id', (req, res, next) => {
 router.patch('/:id', (req, res, next) => {
   let updatedShop = req.body;
   knex('shops')
-    .where({id: req.params.id})
+    .where({
+      id: req.params.id
+    })
     .first() // NEED TO DO FIRST - to get from array to object
     .update(updatedShop)
     .then((data) => {
@@ -66,10 +70,28 @@ router.patch('/:id', (req, res, next) => {
 
 router.get('/:id/edit', (req, res, next) => {
   knex('shops')
-    .where({id: req.params.id})
+    .where({
+      id: req.params.id
+    })
     .first()
     .then((data) => {
       res.status(200).render('shops/edit', {shop: data});
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.delete('/:id', (req, res, next) => {
+  console.log('accessed delete route');
+  knex('shops')
+    .where({
+      id: req.params.id
+    })
+    .first()
+    .del()
+    .then(() => {
+      res.status(204).redirect('/shops');
     })
     .catch((err) => {
       next(err);

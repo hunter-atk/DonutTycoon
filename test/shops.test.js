@@ -171,13 +171,45 @@ describe("POST /shops", function() {
 });
 
 describe("DELETE /shops/:id", function() {
-  it('should redirect to shops/', function(done) {
+  before(function(){
+    knex('shops').del().then(() => null);
+    knex('shops').insert(SHOPS).then(() => null);
+  });
+
+  it('should delete entry from shops table', function(done) {
     request.delete('/shops/1')
+    .end(function(err, res) {
+      if (err) throw err;
+      knex('shops')
+        .where({id: 1})
+        .first()
+        .then((shop) => {
+          console.log(shop);
+          expect(shop).to.be.undefined;
+          done();
+        });
+    });
+  });
+
+  it('should redirect to shops/', function(done) {
+    request.delete('/shops/2')
+    .expect('Content-Type', /text\/plain/)
+    .expect(302)
+    .expect('Location', '/shops')
+    .end(function(err, res) {
+      if (err) throw err;
+      done();
+    });
+  });
+
+  it('should display all shops but not the deleted item', function(done) {
+    request.get('/shops')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      expect(res.text).to.contain('random');
+      expect(res.text).to.not.contain('Jim Freeze');
+      expect(res.text).to.not.contain('Denver');
       done();
     });
   });

@@ -5,5 +5,20 @@
 <p>city: <%= shop.city %></p>
 <a href="/shops" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to All Shops</a>
 <a href="<%= shop.id %>/edit" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</a>
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn modal-trigger" href="#modal"><i class="material-icons left">delete</i>Delete</a>
 
+<!-- Modal Structure -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h4>Are you sure you wish to delete this entry?</h4>
+    <p>Please choose to confirm or cancel</p>
+  </div>
+  <!-- <div class="modal-footer"> -->
+    <form class="modal-footer" action="/shops/<%= shop.id %>?_method=DELETE" method="post">
+      <a href="/shops" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat"><i class="material-icons left">delete</i>Confirm Delete</button>
+    </form>
+  <!-- </div> -->
+</div>
 <%- include ../partials/mainFoot.ejs %>

@@ -6,6 +6,7 @@ const knex = require('../db/knex');
 
 router.get('/', (req, res, next) => {
   knex('shops')
+    .orderBy('updated_at', 'desc')
     .then((data) => {
       res.status(200).render('shops/index', {shops: data});
     })
@@ -83,7 +84,6 @@ router.get('/:id/edit', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  console.log('accessed delete route');
   knex('shops')
     .where({
       id: req.params.id

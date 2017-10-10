@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 process.env.PORT = 3030;
+process.env.NODE_ENV = 'test';
 
 const expect = require('chai').expect;
 const server = require('../server');
@@ -184,7 +185,6 @@ describe("DELETE /shops/:id", function() {
         .where({id: 1})
         .first()
         .then((shop) => {
-          console.log(shop);
           expect(shop).to.be.undefined;
           done();
         });

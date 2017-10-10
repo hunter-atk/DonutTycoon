@@ -8,5 +8,8 @@
   <input type="text" name="city" placeholder="city">
   <button type="submit" class="waves-effect waves-light btn">Create</button>
 </form>
+<% if (error) { %>
+  <p><%= error %></p>
+<% } %>
 
 <%- include ../partials/mainFoot.ejs %>

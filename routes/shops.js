@@ -14,8 +14,28 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.post('/', (req, res, next) => {
+  // if forms is complete, POST and redirect
+  if (req.body.name && req.body.city) {
+    knex('shops')
+      .insert({
+        name: req.body.name,
+        city: req.body.city
+      })
+      .then(() => {
+        res.redirect('/shops');
+      })
+      .catch((err) => {
+        next(err);
+      });
+  } else {
+    // if forms is not complete, do not post AND send error
+    res.render('shops/new', {error: 'Please be sure all fields are completed'});
+  }
+});
+
 router.get('/new', (req, res, next) => {
-  res.render('shops/new');
+  res.render('shops/new', {error: ''});
 });
 
 router.get('/:id', (req, res, next) => {
@@ -54,8 +74,6 @@ router.get('/:id/edit', (req, res, next) => {
     .catch((err) => {
       next(err);
     });
-
-
 });
 
 module.exports = router;

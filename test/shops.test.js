@@ -123,13 +123,48 @@ describe("GET /shops/new", function() {
 });
 
 describe("POST /shops", function() {
+  before(function(){
+    knex('shops').del().then(() => null);
+  });
+
+  it('should create a new entry in the database', function(done) {
+    request.post('/shops')
+    .send({name: 'Spudnuts', city: 'Berea'})
+    .end(function(err, res) {
+      if (err) throw err;
+      knex('shops')
+        .where({
+          name: 'Spudnuts'
+        })
+        .first()
+        .then((shop) => {
+          expect(shop.name).to.equal('Spudnuts');
+          expect(shop.city).to.equal('Berea');
+          done();
+        });
+    });
+  });
+
   it('should redirect to shops/', function(done) {
     request.post('/shops')
+    .send({name: 'Giant Eagle', city: 'Strongsville'})
+    .expect('Content-Type', /text\/plain/)
+    .expect(302)
+    .expect('Location', '/shops')
+    .end(function(err, res) {
+      if (err) throw err;
+      done();
+    });
+  });
+
+  it('should display shops with the newly created shop', function(done) {
+    request.get('/shops')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      expect(res.text).to.contain('random');
+      expect(res.text).to.contain('Spudnuts');
+      expect(res.text).to.contain('Strongsville');
       done();
     });
   });

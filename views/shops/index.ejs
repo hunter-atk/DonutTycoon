@@ -1,9 +1,10 @@
 <%- include ../partials/mainHead.ejs %>
 
 <h2>All Shops</h2>
-<ul>
+<div class="collection">
   <% shops.forEach(function(shop) { %>
-    <li><%= shop.name %> - <%= shop.city %></li>
+    <!-- <li class="collection-item"><%= shop.name %> - <%= shop.city %></li> -->
+    <a class="collection-item" href="shops/<%= shop.id %>"><%= shop.name %> - <%= shop.city %></a>
   <% }) %>
 </ul>
 

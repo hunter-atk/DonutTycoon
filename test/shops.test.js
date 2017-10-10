@@ -114,7 +114,9 @@ describe("GET /shops/new", function() {
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      expect(res.text).to.contain('random');
+      expect(res.text).to.contain('Name:');
+      expect(res.text).to.contain('City:');
+      expect(res.text).to.contain('Create a New Shop');
       done();
     });
   });

@@ -1,1 +1,12 @@
-this is the create page for a shop
+<%- include ../partials/mainHead.ejs %>
+
+<h2>Create a New Shop</h2>
+<form class="" method="post" action="/shops">
+  <label for="name">Name:</label>
+  <input type="text" name="name" placeholder="name">
+  <label for="city">City:</label>
+  <input type="text" name="city" placeholder="city">
+  <button type="submit" class="waves-effect waves-light btn">Create</button>
+</form>
+
+<%- include ../partials/mainFoot.ejs %>

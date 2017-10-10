@@ -6,7 +6,8 @@
   <input type="text" name="name" value="<%= shop.name %>">
   <label for="city">City:</label>
   <input type="text" name="city" value="<%= shop.city %>">
-  <button type="submit" class="waves-effect waves-light btn">Submit</button>
+  <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">create</i>Save Changes</button>
+  <a href="/shops/<%= shop.id %>" class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a>
 </form>
 
 <%- include ../partials/mainFoot.ejs %>

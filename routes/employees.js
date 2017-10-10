@@ -2,8 +2,35 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('employees working');
+const knex = require('../db/knex');
+
+router.get('/:sid/employees', (req, res, next) => {
+  knex('employees')
+    .where({
+      shop_id: req.params.sid
+    })
+    .join('shops', 'employees.shop_id', '=', 'shops.id')
+    .select('employees.id as eid', 'employees.first_name', 'employees.last_name', 'shops.id', 'shops.name')
+    .then((data) => {
+      res.render('employees/index', {employees_shops: data});
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.get('/:sid/employees/:eid', (req, res, next) => {
+  knex('employees')
+    .innerJoin('shops', 'employees.shop_id', 'shops.id')
+    .select('employees.id as e_id', 'employees.first_name', 'employees.last_name',
+            'shops.id as s_id', 'shops.name as s_name')
+    .where('employees.id', req.params.eid)
+    .then((data) => {
+      res.render('employees/index', {employees_shops: data});
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 module.exports = router;

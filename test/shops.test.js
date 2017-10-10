@@ -19,6 +19,11 @@ const SHOP = {id: 3, name: "Crunkin Cronuts", city: 'New York'};
 // afterEach(function() {
 //   knex('shops').del().then(() => null);
 // });
+before(function(done) {
+  knex('shops').del().then(() => {
+    done();
+  });
+});
 
 describe("GET /shops", function() {
   before(function(){

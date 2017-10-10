@@ -28,8 +28,8 @@ app.set('view engine', 'ejs');
 
 // middlewear routers
 app.use('/shops', shops);
+app.use('/shops', employees);
 app.use('/donuts', donuts);
-app.use('/employees', employees);
 
 app.get('/', (req, res) => {
   res.send('hello world');

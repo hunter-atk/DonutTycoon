@@ -171,7 +171,28 @@ describe("POST /shops/:sid/employees, create a new employee", function() {
 });
 
 describe("DELETE /shops/:sid/employees/:eid, delete selected employee", function() {
-  it('', function() {
-    expect(false).to.equal(true);
+  it.only('should delete employee from the database', function(done) {
+    request.delete('/shops/1/employees/1')
+    .end(function(err, res) {
+      if (err) throw err;
+      knex('employees')
+        .where({id: 1})
+        .first()
+        .then((employee) => {
+          expect(employee).to.be.undefined;
+          done();
+        });
+    });
+  });
+
+  it.only('should redirect to all employees index', function(done) {
+    request.delete('/shops/1/employees/1')
+    .expect('Content-Type', /text\/plain/)  // based on redirect
+    .expect(302)
+    .expect('Location', '/shops/1/employees')  // redirect to the index page for all employees
+    .end(function(err, res) {
+      if (err) throw err;
+      done();
+    });
   });
 });

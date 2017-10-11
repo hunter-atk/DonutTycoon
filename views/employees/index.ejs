@@ -1,11 +1,13 @@
 <%- include ../partials/mainHead.ejs %>
 
 <h2>All Employees for <%= shopName %></h2>
-<a href="/shops/<%= shopId %>/employees/new" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Create a New Employee</a>
 <div class="collection">
   <% employees_shops.forEach(function(employee_shop) { %>
     <a class="collection-item" href="employees/<%= employee_shop.e_id %>"><%= employee_shop.first_name %> <%= employee_shop.last_name %></a>
   <% }) %>
-</ul>
+</div>
+<a href="/shops/<%= shopId %>/" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to Shop</a>
+<a href="/shops/<%= shopId %>/employees/new" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Create a New Employee</a>
+
 
 <%- include ../partials/mainFoot.ejs %>

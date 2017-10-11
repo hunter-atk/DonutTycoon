@@ -47,8 +47,18 @@ describe("GET /shops/:sid/employees/:eid, show one employee", function() {
 });
 
 describe("GET /shops/:sid/employees/:eid/edit, get edit page for employee", function() {
-  it('', function() {
-    expect(false).to.equal(true);
+  it.only('should display the edit form with current values', function(done) {
+    request.get('/shops/1/employees/1/edit')
+    .expect('Content-Type', /text\/html/)
+    .expect(200)
+    .end(function(err, res) {
+      if (err) throw err;
+      expect(res.text).to.contain('Ryan');
+      expect(res.text).to.contain('Wittrup');
+      expect(res.text).to.contain('Favorite Donut:');
+      expect(res.text).to.contain('Sprinkles');
+      done();
+    });
   });
 });
 

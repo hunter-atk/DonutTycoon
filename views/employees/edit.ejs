@@ -1,0 +1,27 @@
+<%- include ../partials/mainHead.ejs %>
+
+<h2><%= employees_shops.first_name %> <%= employees_shops.last_name %></h2>
+<form class="" method="post" action="/shops/<%= employees_shops.s_id %>/employees/<%= employees_shops.e_id %>?_method=PATCH">
+  <label for="firstName">First Name:</label>
+  <input type="text" name="firstName" value="<%= employees_shops.first_name %>">
+  <label for="lastName">Last Name:</label>
+  <input type="text" name="lastName" value="<%= employees_shops.last_name %>">
+  <!-- <label for="favDonut">Favorite Donut:</label>
+  <input type="text" name="favDonut" value="<%= employees_shops.d_id %>"> -->
+
+  <div class="input-field col s12">
+    <select>
+      <option value="" disabled selected>Choose your option</option>
+      <% donuts.forEach(function(donut) { %>
+        <option value="<%= donut.id %>" <%if (employees_shops.d_id === donut.id) { %>selected<% } %>><%= donut.name %></option>
+      <% }) %>
+    </select>
+    <label>Favorite Donut:</label>
+  </div>
+
+
+  <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">create</i>Save Changes</button>
+  <a href="/shops/<%= employees_shops.s_id %>/employees/<%= employees_shops.e_id %>" class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a>
+</form>
+
+<%- include ../partials/mainFoot.ejs %>

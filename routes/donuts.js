@@ -2,8 +2,17 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('donuts working');
+const knex = require('../db/knex');
+
+router.get('/json', (req, res, next) => {
+  knex('donuts')
+    .orderBy('id')
+    .then((donuts) => {
+      res.status(200).json(donuts);
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 module.exports = router;

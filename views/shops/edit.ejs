@@ -1,7 +1,7 @@
 <%- include ../partials/mainHead.ejs %>
 
 <h2><%= shop.name %></h2>
-<form class="" method="post" action="/shops/1?_method=PATCH">
+<form class="" method="post" action="/shops/<%= shop.id %>?_method=PATCH">
   <label for="name">Name:</label>
   <input type="text" name="name" value="<%= shop.name %>">
   <label for="city">City:</label>

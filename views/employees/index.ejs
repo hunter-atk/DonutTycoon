@@ -4,7 +4,7 @@
 <a href="#" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Create a New Shop</a>
 <div class="collection">
   <% employees_shops.forEach(function(employee_shop) { %>
-    <a class="collection-item" href="<%= employee_shop.id %>"><%= employee_shop.first_name %> <%= employee_shop.last_name %></a>
+    <a class="collection-item" href="employees/<%= employee_shop.e_id %>"><%= employee_shop.first_name %> <%= employee_shop.last_name %></a>
   <% }) %>
 </ul>
 

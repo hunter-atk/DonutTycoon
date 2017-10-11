@@ -1,28 +1,28 @@
 /*jshint esversion: 6 */
 const express = require('express');
 const rp = require('request-promise');
-const router = express.Router();
+const router = express.Router({mergeParams: true}); // passed route params from parent to child
 
 const knex = require('../db/knex');
 
-router.route('/:sid/employees')
+router.route('/')
   .get((req, res, next) => {
     knex('employees')
       .where({
-        shop_id: req.params.sid
+        shop_id: req.params.shop_id
       })
       .join('shops', 'employees.shop_id', '=', 'shops.id')
       .select(
         'employees.id as e_id', 'employees.first_name', 'employees.last_name',
         'shops.id as s_id', 'shops.name')
       .then((employees_shops) => {
-        res.render('employees/index', {employees_shops, shopId: req.params.sid, shopName: employees_shops[0].name});
+        res.render('employees/index', {employees_shops, shopId: req.params.shop_id, shopName: employees_shops[0].name});
       })
       .catch(err => next(err));
   })
   .post((req, res, next) => {
     let newEmployee = {
-      shop_id: req.params.sid,
+      shop_id: req.params.shop_id,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
@@ -32,12 +32,12 @@ router.route('/:sid/employees')
     knex('employees')
       .insert(newEmployee)
       .then(() => {
-        res.redirect(`/shops/${req.params.sid}/employees`);
+        res.redirect(`/shops/${req.params.shop_id}/employees`);
       })
       .catch((err) => next(err));
   });
 
-router.get('/:sid/employees/:eid/edit', (req, res, next) => {
+router.get('/:eid/edit', (req, res, next) => {
   knex('employees')
     .innerJoin('shops', 'employees.shop_id', 'shops.id')
     .innerJoin('donuts', 'employees.favorite_donut', 'donuts.id')
@@ -61,20 +61,20 @@ router.get('/:sid/employees/:eid/edit', (req, res, next) => {
     .catch(err => next(err));
 });
 
-router.get('/:sid/employees/new', (req, res, next) => {
+router.get('/new', (req, res, next) => {
   rp('http://localhost:3000/donuts/json')
     .then((htmlString) => {
       res.render('employees/new',
       {
         error: null,
-        shopId: req.params.sid,
+        shopId: req.params.shop_id,
         donuts: JSON.parse(htmlString)
       });
     })
     .catch(err => next(err));
 });
 
-router.route('/:sid/employees/:eid')
+router.route('/:eid')
   .get((req, res, next) => {
     knex('employees')
       .innerJoin('shops', 'employees.shop_id', 'shops.id')
@@ -98,19 +98,17 @@ router.route('/:sid/employees/:eid')
       .first()
       .update(updatedEmployee)
       .then(() => {
-        res.status(204).redirect(`/shops/${req.params.sid}/employees/${req.params.eid}`);
+        res.status(204).redirect(`/shops/${req.params.shop_id}/employees/${req.params.eid}`);
       })
       .catch(err => next(err));
   })
   .delete((req, res, next) => {
     knex('employees')
-      .where({id: req.params.sid})
+      .where({id: req.params.shop_id})
       .del()
-      .then(() => res.status(204).redirect(`/shops/${req.params.sid}/employees`))
+      .then(() => res.status(204).redirect(`/shops/${req.params.shop_id}/employees`))
       .catch(err => next(err));
   });
-
-
 
 
 module.exports = router;

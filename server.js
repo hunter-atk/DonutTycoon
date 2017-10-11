@@ -37,7 +37,7 @@ app.use('/shops', shops);
 
 // TODO update routes for employees to be mounted differently
 // app.use('/shops/:sid/employees', routes.employees);
-app.use('/shops', employees);
+app.use('/shops/:shop_id/employees', employees);
 
 app.use('/donuts', donuts);
 

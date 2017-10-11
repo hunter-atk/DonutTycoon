@@ -4,11 +4,16 @@ const router = express.Router();
 
 const knex = require('../db/knex');
 
+// TODO - consolidate routes
+// router.route('/')
+// .get()
+// .patch()
+
 router.get('/', (req, res, next) => {
   knex('shops')
     .orderBy('updated_at', 'desc')
-    .then((data) => {
-      res.status(200).render('shops/index', {shops: data});
+    .then((shops) => {
+      res.status(200).render('shops/index', {shops});
     })
     .catch((err) => {
       next(err);
@@ -45,8 +50,8 @@ router.get('/:id', (req, res, next) => {
     id: req.params.id
   })
   .first() // NEED TO DO FIRST - to get from array to object
-  .then((data) => {
-    res.status(200).render('shops/show', {shop: data});
+  .then((shop) => {
+    res.status(200).render('shops/show', {shop});
   })
   .catch((err) => {
     next(err);
@@ -61,7 +66,7 @@ router.patch('/:id', (req, res, next) => {
     })
     .first() // NEED TO DO FIRST - to get from array to object
     .update(updatedShop)
-    .then((data) => {
+    .then(() => {
       res.status(204).redirect('/shops/' + req.params.id);
     })
     .catch((err) => {
@@ -75,8 +80,8 @@ router.get('/:id/edit', (req, res, next) => {
       id: req.params.id
     })
     .first()
-    .then((data) => {
-      res.status(200).render('shops/edit', {shop: data});
+    .then((shop) => {
+      res.status(200).render('shops/edit', {shop});
     })
     .catch((err) => {
       next(err);

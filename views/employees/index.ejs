@@ -1,7 +1,7 @@
 <%- include ../partials/mainHead.ejs %>
 
-<h2>All Employees for SHOP NAME</h2>
-<a href="#" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Create a New Employee</a>
+<h2>All Employees for <%= shopName %></h2>
+<a href="/shops/<%= shopId %>/employees/new" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Create a New Employee</a>
 <div class="collection">
   <% employees_shops.forEach(function(employee_shop) { %>
     <a class="collection-item" href="employees/<%= employee_shop.e_id %>"><%= employee_shop.first_name %> <%= employee_shop.last_name %></a>

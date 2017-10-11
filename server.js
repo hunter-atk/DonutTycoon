@@ -15,6 +15,11 @@ const shops = require('./routes/shops');
 const donuts = require('./routes/donuts');
 const employees = require('./routes/employees');
 
+
+// TODO - create index file with all routes
+// const routes = require('./routes/index');
+
+
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
 
@@ -26,10 +31,16 @@ app.use(bodyParser.json());
 // configure ejs for templating
 app.set('view engine', 'ejs');
 
-// middlewear routers
+
+// middleware routers
 app.use('/shops', shops);
+
+// TODO update routes for employees to be mounted differently
+// app.use('/shops/:sid/employees', routes.employees);
 app.use('/shops', employees);
+
 app.use('/donuts', donuts);
+
 
 app.get('/', (req, res) => {
   res.send('hello world');

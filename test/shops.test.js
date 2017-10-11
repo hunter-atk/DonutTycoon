@@ -8,13 +8,15 @@ const server = require('../server');
 const request = require('supertest')(server);
 const knex = require('../db/knex');
 
-// MOCKS for testing
+// MOCKS for testing TODO - remove these based on migrations and seeds
 const SHOPS = [
   {id: 1, name: "Jim Freeze", city: 'Cleveland'},
   {id: 2, name: 'Krunchy Kreme', city: 'Denver'}
 ];
 const SHOP = {id: 3, name: "Crunkin Cronuts", city: 'New York'};
 
+
+// TODO - update to beforeEach with rollback, migrate, and seed
 // runs after each test in this block
 // afterEach(function() {
 //   knex('shops').del().then(() => null);

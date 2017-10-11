@@ -1,0 +1,51 @@
+<%- include ../partials/mainHead.ejs %>
+
+<h2>Create a New Employee</h2>
+<form class="" method="post" action="/shops/<%= shopId %>/employees">
+  <div class="row">
+    <div class="input-field col s6">
+      <label for="first_name">First Name:</label>
+      <input type="text" name="first_name" placeholder="">
+    </div>
+    <div class="input-field col s6">
+      <label for="last_name">Last Name:</label>
+      <input type="text" name="last_name" placeholder="">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <label for="password">Password:</label>
+      <input type="password" name="password" placeholder="">
+    </div>
+    <div class="input-field col s6">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" name="confirmPassword" placeholder="">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <label for="email">Email:</label>
+      <input type="email" name="email" placeholder="email@email.com">
+    </div>
+    <div class="input-field col s6">
+      <select name="favorite_donut">
+        <option value="" disabled selected>Choose your option</option>
+        <% donuts.forEach(function(donut) { %>
+          <option value="<%= donut.id %>"><%= donut.name %></option>
+          <% }) %>
+        </select>
+        <label for="favorite_donut">Favorite Donut:</label>
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">create</i>Create</button>
+      <a href="/shops/<%= shopId %>/employees" class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a>
+    </div>
+  </div>
+</form>
+
+<% if (error) { %>
+  <p><%= error %></p>
+<% } %>
+
+<%- include ../partials/mainFoot.ejs %>

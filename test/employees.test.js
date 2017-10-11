@@ -112,14 +112,61 @@ describe("PATCH /shops/:sid/employees/:eid, edit selected employee", function() 
 });
 
 describe("GET /shops/:sid/employees/new, get new employee page", function() {
-  it('', function() {
-    expect(false).to.equal(true);
+  it.only('renders the new employee page with form', function(done) {
+    request.get('/shops/1/employees/new')
+    .expect('Content-Type', /text\/html/)
+    .expect(200)
+    .end(function(err, res) {
+      if (err) throw err;
+      expect(res.text).to.contain('First Name:');
+      expect(res.text).to.contain('Last Name:');
+      expect(res.text).to.contain('Email:');
+      expect(res.text).to.contain('Favorite Donut:');
+      // expect(res.text).to.contain('Password:'); TODO
+      done();
+    });
   });
 });
 
 describe("POST /shops/:sid/employees, create a new employee", function() {
-  it('', function() {
-    expect(false).to.equal(true);
+  it.only('should create a record in the database', function(done) {
+    request.post('/shops/1/employees')
+      .send({
+        first_name: 'Tommy',
+        last_name: 'Snax',
+        email: 'numnums@donuts.com',
+        favorite_donut:2
+      })
+      .end(function(err, res) {
+        if (err) throw err;
+        knex('employees')
+          .where({
+            email: 'numnums@donuts.com'
+          })
+          .first()
+          .then((employee) => {
+            expect(employee.first_name).to.equal('Tommy');
+            expect(employee.favorite_donut).to.equal(2);
+            done();
+          });
+      });
+  });
+
+  it.only('should redirect to all employees index', function(done) {
+    request.post('/shops/1/employees')
+      .send({
+        first_name: 'Tommy',
+        last_name: 'Snax',
+        email: 'numnums@donuts.com',
+        favorite_donut:2
+      })
+      .expect('Content-Type', /text\/plain/)  // based on redirect
+      .expect(302)
+      .expect('Location', '/shops/1/employees')  // redirect to the index page for all employees
+      .end(function(err, res) {
+        if (err) throw err;
+        done();
+      });
   });
 });
 

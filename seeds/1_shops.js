@@ -5,10 +5,10 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('shops').insert([
-        {id: 1, name: "Jim Freeze", city: 'Cleveland'},
-        {id: 2, name: 'Krunchy Kreme', city: 'Denver'},
-        {id: 3, name: 'Dippin Donuts', city: 'Austin'},
-        {id: 4, name: "Bob's Donuts", city: 'Chicago'}
+        {name: "Jim Freeze", city: 'Cleveland'},
+        {name: 'Krunchy Kreme', city: 'Denver'},
+        {name: 'Dippin Donuts', city: 'Austin'},
+        {name: "Bob's Donuts", city: 'Chicago'}
       ]);
     });
 };

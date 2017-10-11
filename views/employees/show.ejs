@@ -2,6 +2,8 @@
 
 <h2><%= employees_shops.first_name %> <%= employees_shops.last_name %></h2>
 <p>Store: <%= employees_shops.s_name %></p>
+<p>Favorite Donuts: <%= employees_shops.d_name %></p>
+
 <a href="/shops/<%= employees_shops.s_id %>/employees" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to All Employees</a>
 <a href="<%= employees_shops.e_id %>/edit" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</a>
 

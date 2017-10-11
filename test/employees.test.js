@@ -63,8 +63,51 @@ describe("GET /shops/:sid/employees/:eid/edit, get edit page for employee", func
 });
 
 describe("PATCH /shops/:sid/employees/:eid, edit selected employee", function() {
-  it('', function() {
-    expect(false).to.equal(true);
+  it.only('should update a record in the database', function(done) {
+    request.patch('/shops/1/employees/3')
+      .send({ first_name: 'David Allen', favorite_donut: 3})
+      .end(function(err, res) {
+        if (err) throw err;
+        knex('employees')
+          .where({
+            id: 3
+          })
+          .first()
+          .then((employee) => {
+            expect(employee.first_name).to.equal('David Allen');
+            expect(employee.favorite_donut).to.equal(3);
+            done();
+          });
+      });
+  });
+
+  it.only('should redirect to all employees index', function(done) {
+    request.patch('/shops/1/employees/3')
+      .send({ first_name: 'David Allen', favorite_donut: 3})
+      .expect('Content-Type', /text\/plain/)  // based on redirect
+      .expect(302)
+      .expect('Location', '/shops/1/employees/3')  // redirect to the show page for edited shop
+      .end(function(err, res) {
+        if (err) throw err;
+        done();
+      });
+  });
+
+  it.only('should display the update on all employees index', function(done) {
+    request.patch('/shops/1/employees/3')
+      .send({ first_name: 'David Allen', favorite_donut: 3})
+      .end(function(err, res) {
+        if (err) throw err;
+        request.get('/shops/1/employees/3')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) throw err;
+          expect(res.text).to.contain('David Allen');
+          expect(res.text).to.contain('Choc-tastic');
+          done();
+        });
+      });
   });
 });
 

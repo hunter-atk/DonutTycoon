@@ -26,7 +26,7 @@ router.get('/:sid/employees/:eid/edit', (req, res, next) => {
     .innerJoin('donuts', 'employees.favorite_donut', 'donuts.id')
     .select('employees.id as e_id', 'employees.first_name', 'employees.last_name', 'employees.favorite_donut',
             'shops.id as s_id', 'shops.name as s_name',
-            'donuts.id as d_id', 'donuts.name')
+            'donuts.id as d_id', 'donuts.name as d_name')
     .where('employees.id', req.params.eid)
     .first()
     .then((data) => {
@@ -51,8 +51,10 @@ router.get('/:sid/employees/:eid/edit', (req, res, next) => {
 router.get('/:sid/employees/:eid', (req, res, next) => {
   knex('employees')
     .innerJoin('shops', 'employees.shop_id', 'shops.id')
-    .select('employees.id as e_id', 'employees.first_name', 'employees.last_name',
-            'shops.id as s_id', 'shops.name as s_name')
+    .innerJoin('donuts', 'employees.favorite_donut', 'donuts.id')
+    .select('employees.id as e_id', 'employees.first_name', 'employees.last_name', 'employees.favorite_donut',
+            'shops.id as s_id', 'shops.name as s_name',
+            'donuts.id as d_id', 'donuts.name as d_name')
     .where('employees.id', req.params.eid)
     .first()
     .then((data) => {
@@ -63,6 +65,21 @@ router.get('/:sid/employees/:eid', (req, res, next) => {
     });
 });
 
+router.patch('/:sid/employees/:eid', (req, res, next) => {
+  let updatedEmployee = req.body;
+  knex('employees')
+    .where({
+      id: req.params.eid
+    })
+    .first()
+    .update(updatedEmployee)
+    .then(() => {
+      res.status(204).redirect(`/shops/${req.params.sid}/employees/${req.params.eid}`);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
 
 module.exports = router;

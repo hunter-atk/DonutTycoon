@@ -4,25 +4,25 @@
 <form class="" method="post" action="/shops/<%= employees_shops.s_id %>/employees/<%= employees_shops.e_id %>?_method=PATCH">
   <div class="row">
     <div class="input-field col s12">
-      <input type="text" name="firstName" value="<%= employees_shops.first_name %>">
-      <label for="firstName">First Name:</label>
+      <input type="text" name="first_name" value="<%= employees_shops.first_name %>">
+      <label for="first_name">First Name:</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <input type="text" name="lastName" value="<%= employees_shops.last_name %>">
-      <label for="lastName">Last Name:</label>
+      <input type="text" name="last_name" value="<%= employees_shops.last_name %>">
+      <label for="last_name">Last Name:</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <select>
+      <select name="favorite_donut">
         <option value="" disabled selected>Choose your option</option>
         <% donuts.forEach(function(donut) { %>
           <option value="<%= donut.id %>" <%if (employees_shops.d_id === donut.id) { %>selected<% } %>><%= donut.name %></option>
           <% }) %>
         </select>
-        <label>Favorite Donut:</label>
+        <label for="favorite_donut">Favorite Donut:</label>
       </div>
   </div>
 

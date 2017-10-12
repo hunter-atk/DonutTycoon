@@ -22,6 +22,15 @@ router.route('/')
       .catch(err => next(err));
   });
 
+router.route('/:id/edit')
+  .get((req, res, next) => {
+    knex('donuts')
+      .where({id: req.params.id})
+      .first()
+      .then(donut => res.status(200).render('donuts/edit', {donut}))
+      .catch(err => next(err));
+  });
+
 router.route('/:id')
   .get((req, res, next) => {
     knex('donuts')

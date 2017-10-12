@@ -50,7 +50,7 @@ describe("GET /donuts/:id", function() {
 
 describe("GET /donuts/:id/edit", function() {
   it.only('should render the edit form for a given donut', function(done) {
-    request.get('/donuts/2')
+    request.get('/donuts/2/edit')
     .expect('Content-Type', /text\/html/)
     .expect(200)
     .end(function(err, res) {
@@ -65,7 +65,7 @@ describe("GET /donuts/:id/edit", function() {
 });
 
 describe("PATCH /donuts/:id", function() {
-  it('', function(done) {
+  it.only('', function(done) {
     expect().to.equal();
   });
 });

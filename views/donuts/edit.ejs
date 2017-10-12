@@ -1,0 +1,15 @@
+<%- include ../partials/mainHead.ejs %>
+
+<h2><%= donut.name %></h2>
+<form class="" method="post" action="/donuts/<%= donut.id %>?_method=PATCH">
+  <label for="name">Name:</label>
+  <input type="text" name="name" value="<%= donut.name %>">
+  <label for="city">Topping:</label>
+  <input type="text" name="city" value="<%= donut.topping %>">
+  <label for="price">Price:</label>
+  <input type="number" name="price" value="<%= donut.price %>">
+  <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">create</i>Save Changes</button>
+  <a href="/donuts/<%= donut.id %>" class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a>
+</form>
+
+<%- include ../partials/mainFoot.ejs %>

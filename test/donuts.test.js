@@ -65,8 +65,33 @@ describe("GET /donuts/:id/edit", function() {
 });
 
 describe("PATCH /donuts/:id", function() {
-  it.only('', function(done) {
-    expect().to.equal();
+  it.only('should update the database for changes made to entry', function(done) {
+    request.patch('/donuts/3')
+      .send({ name: 'Eclair', topping: 'Chocolate fudge pudding', price: 440})
+      .end(function(err, res) {
+        if (err) throw err;
+        knex('donuts')
+          .where({'name': 'Eclair'})
+          .first()
+          .then((donut) => {
+            expect(donut.name).to.equal('Eclair');
+            expect(donut.topping).to.equal('Chocolate fudge pudding');
+            expect(donut.price).to.equal(440);
+            done();
+          });
+      });
+  });
+
+  it.only('should redirect to show page for updated donut', function(done) {
+    request.patch('/donuts/3')
+      .send({ name: 'Eclair', topping: 'Chocolate fudge pudding', price: 440})
+      .expect('Content-Type', /text\/plain/)  // based on redirect
+      .expect(302)
+      .expect('Location', '/donuts/3')  // redirect to the show page for edited donut
+      .end(function(err, res) {
+        if (err) throw err;
+        done();
+      });
   });
 });
 

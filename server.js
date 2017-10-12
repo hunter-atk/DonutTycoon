@@ -11,39 +11,38 @@ const bodyParser = require('body-parser');
 
 const ejs = require('ejs');
 
+
+// TODO - create index file with all routes
+// const routes = require('./routes/index');
 const shops = require('./routes/shops');
 const donuts = require('./routes/donuts');
 const employees = require('./routes/employees');
 
 
-// TODO - create index file with all routes
-// const routes = require('./routes/index');
-
-
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+
 // configure ejs for templating
 app.set('view engine', 'ejs');
 
 
 // middleware routers
-app.use('/shops', shops);
-
 // TODO update routes for employees to be mounted differently
+app.use('/shops', shops);
 // app.use('/shops/:sid/employees', routes.employees);
 app.use('/shops/:shop_id/employees', employees);
-
 app.use('/donuts', donuts);
 
 
 app.get('/', (req, res) => {
-  res.send('hello world');
+  res.redirect('/shops');
 });
 
 // routes not found

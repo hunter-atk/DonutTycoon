@@ -15,4 +15,11 @@ router.get('/json', (req, res, next) => {
     });
 });
 
+router.route('/')
+  .get((req, res, next) => {
+    knex('donuts')
+      .then(donuts => res.status(200).render('donuts/index', {donuts}))
+      .catch(err => next(err));
+  });
+
 module.exports = router;

@@ -19,7 +19,7 @@ beforeEach(function(done) {
 });
 
 describe("GET /shops/:sid/employees, show all employees", function() {
-  it.only('should return all employees for a given shop', function(done) {
+  it('should return all employees for a given shop', function(done) {
     request.get('/shops/1/employees')
     .expect('Content-Type', /text\/html/)
     .expect(200)
@@ -33,7 +33,7 @@ describe("GET /shops/:sid/employees, show all employees", function() {
 });
 
 describe("GET /shops/:sid/employees/:eid, show one employee", function() {
-  it.only('should return a selected employee', function(done) {
+  it('should return a selected employee', function(done) {
     request.get('/shops/1/employees/3')
     .expect('Content-Type', /text\/html/)
     .expect(200)
@@ -47,7 +47,7 @@ describe("GET /shops/:sid/employees/:eid, show one employee", function() {
 });
 
 describe("GET /shops/:sid/employees/:eid/edit, get edit page for employee", function() {
-  it.only('should display the edit form with current values', function(done) {
+  it('should display the edit form with current values', function(done) {
     request.get('/shops/1/employees/1/edit')
     .expect('Content-Type', /text\/html/)
     .expect(200)
@@ -63,7 +63,7 @@ describe("GET /shops/:sid/employees/:eid/edit, get edit page for employee", func
 });
 
 describe("PATCH /shops/:sid/employees/:eid, edit selected employee", function() {
-  it.only('should update a record in the database', function(done) {
+  it('should update a record in the database', function(done) {
     request.patch('/shops/1/employees/3')
       .send({ first_name: 'David Allen', favorite_donut: 3})
       .end(function(err, res) {
@@ -81,7 +81,7 @@ describe("PATCH /shops/:sid/employees/:eid, edit selected employee", function() 
       });
   });
 
-  it.only('should redirect to all employees index', function(done) {
+  it('should redirect to all employees index', function(done) {
     request.patch('/shops/1/employees/3')
       .send({ first_name: 'David Allen', favorite_donut: 3})
       .expect('Content-Type', /text\/plain/)  // based on redirect
@@ -93,7 +93,7 @@ describe("PATCH /shops/:sid/employees/:eid, edit selected employee", function() 
       });
   });
 
-  it.only('should display the update on all employees index', function(done) {
+  it('should display the update on all employees index', function(done) {
     request.patch('/shops/1/employees/3')
       .send({ first_name: 'David Allen', favorite_donut: 3})
       .end(function(err, res) {
@@ -112,7 +112,7 @@ describe("PATCH /shops/:sid/employees/:eid, edit selected employee", function() 
 });
 
 describe("GET /shops/:sid/employees/new, get new employee page", function() {
-  it.only('renders the new employee page with form', function(done) {
+  it('renders the new employee page with form', function(done) {
     request.get('/shops/1/employees/new')
     .expect('Content-Type', /text\/html/)
     .expect(200)
@@ -129,7 +129,7 @@ describe("GET /shops/:sid/employees/new, get new employee page", function() {
 });
 
 describe("POST /shops/:sid/employees, create a new employee", function() {
-  it.only('should create a record in the database', function(done) {
+  it('should create a record in the database', function(done) {
     request.post('/shops/1/employees')
       .send({
         first_name: 'Tommy',
@@ -152,7 +152,7 @@ describe("POST /shops/:sid/employees, create a new employee", function() {
       });
   });
 
-  it.only('should redirect to all employees index', function(done) {
+  it('should redirect to all employees index', function(done) {
     request.post('/shops/1/employees')
       .send({
         first_name: 'Tommy',
@@ -171,7 +171,7 @@ describe("POST /shops/:sid/employees, create a new employee", function() {
 });
 
 describe("DELETE /shops/:sid/employees/:eid, delete selected employee", function() {
-  it.only('should delete employee from the database', function(done) {
+  it('should delete employee from the database', function(done) {
     request.delete('/shops/1/employees/1')
     .end(function(err, res) {
       if (err) throw err;
@@ -185,7 +185,7 @@ describe("DELETE /shops/:sid/employees/:eid, delete selected employee", function
     });
   });
 
-  it.only('should redirect to all employees index', function(done) {
+  it('should redirect to all employees index', function(done) {
     request.delete('/shops/1/employees/1')
     .expect('Content-Type', /text\/plain/)  // based on redirect
     .expect(302)

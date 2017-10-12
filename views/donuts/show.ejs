@@ -1,0 +1,25 @@
+<%- include ../partials/mainHead.ejs %>
+
+<h2><%= donut.name %></h2>
+<p>Topping: <%= donut.topping %></p>
+<p>Price: $<%= donut.price %></p>
+<a href="/donuts" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to All Donuts</a>
+<a href="<%= donut.id %>/edit" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</a>
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn modal-trigger" href="#modal"><i class="material-icons left">delete</i>Delete</a>
+<a href="#" class="waves-effect waves-light btn"><i class="material-icons left">people</i>ADD TO STORE INVENTORY</a>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h4>Are you sure you wish to delete this entry?</h4>
+    <p>Please choose to confirm or cancel</p>
+  </div>
+  <!-- <div class="modal-footer"> -->
+    <form class="modal-footer" action="/donuts/<%= donut.id %>?_method=DELETE" method="post">
+      <a href="/donuts" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat"><i class="material-icons left">delete</i>Confirm Delete</button>
+    </form>
+  <!-- </div> -->
+</div>
+<%- include ../partials/mainFoot.ejs %>

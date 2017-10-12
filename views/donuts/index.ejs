@@ -2,32 +2,23 @@
 
 <h2>All Donuts</h2>
 <a href="#" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Create a New Donut</a>
-<!-- <div class="collection"> -->
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Topping</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% donuts.forEach(function(donut) { %>
-      <tr>
-        <!-- <a class="collection-item" href="/donuts/<%= donut.id %>"> -->
-          <td><a class="collection-item" href="/donuts/<%= donut.id %>"><%= donut.name %></a></td>
-          <td><%= donut.topping %></td>
-          <td>$<%= donut.price %></td>
-        <!-- </a> -->
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Topping</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% donuts.forEach(function(donut) { %>
+    <tr>
+      <td><a class="collection-item" href="/donuts/<%= donut.id %>"><%= donut.name %></a></td>
+      <td><%= donut.topping %></td>
+      <td>$<%= donut.price %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 
-<!-- <ul>
-  <% donuts.forEach(function(donut) { %>
-    <a class="collection-item" href="/donuts/<%= donut.id %>"><%= donut.name %></a>
-  <% }) %>
-</ul> -->
-<!-- </div> -->
 <%- include ../partials/mainFoot.ejs %>

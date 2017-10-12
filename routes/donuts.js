@@ -22,6 +22,11 @@ router.route('/')
       .catch(err => next(err));
   });
 
+router.route('/new')
+  .get((req, res, next) => {
+    res.status(200).render('donuts/new', {error: null});
+  });
+
 router.route('/:id/edit')
   .get((req, res, next) => {
     knex('donuts')

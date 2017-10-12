@@ -21,46 +21,46 @@ beforeEach(function(done) {
 describe("GET /donuts", function() {
   it.only('should return all donuts', function(done) {
     request.get('/donuts')
-    .expect('Content-Type', /text\/html/)
-    .expect(200)
-    .end(function(err, res) {
-      if (err) throw err;
-      expect(res.text).to.contain('Glazed');
-      expect(res.text).to.contain('Choc-tastic');
-      expect(res.text).to.contain(200);
-      done();
-    });
+      .expect('Content-Type', /text\/html/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) throw err;
+        expect(res.text).to.contain('Glazed');
+        expect(res.text).to.contain('Choc-tastic');
+        expect(res.text).to.contain(200);
+        done();
+      });
   });
 });
 
 describe("GET /donuts/:id", function() {
   it.only('should return a single donut based on id', function(done) {
     request.get('/donuts/1')
-    .expect('Content-Type', /text\/html/)
-    .expect(200)
-    .end(function(err, res) {
-      if (err) throw err;
-      expect(res.text).to.contain('The Usual');
-      expect(res.text).to.contain('Glazed');
-      expect(res.text).to.contain(200);
-      done();
-    });
+      .expect('Content-Type', /text\/html/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) throw err;
+        expect(res.text).to.contain('The Usual');
+        expect(res.text).to.contain('Glazed');
+        expect(res.text).to.contain(200);
+        done();
+      });
   });
 });
 
 describe("GET /donuts/:id/edit", function() {
   it.only('should render the edit form for a given donut', function(done) {
     request.get('/donuts/2/edit')
-    .expect('Content-Type', /text\/html/)
-    .expect(200)
-    .end(function(err, res) {
-      if (err) throw err;
-      expect(res.text).to.contain('Name:');
-      expect(res.text).to.contain('Cinnariffic');
-      expect(res.text).to.contain('Cinnamon and brown sugar');
-      expect(res.text).to.contain(250);
-      done();
-    });
+      .expect('Content-Type', /text\/html/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) throw err;
+        expect(res.text).to.contain('Name:');
+        expect(res.text).to.contain('Cinnariffic');
+        expect(res.text).to.contain('Cinnamon and brown sugar');
+        expect(res.text).to.contain(250);
+        done();
+      });
   });
 });
 
@@ -96,8 +96,17 @@ describe("PATCH /donuts/:id", function() {
 });
 
 describe("GET /donuts/new", function() {
-  it('', function(done) {
-    expect().to.equal();
+  it.only('returns the new donut form', function(done) {
+    request.get('/donuts/new')
+      .expect('Content-Type', /text\/html/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) throw err;
+        expect(res.text).to.contain('Name:');
+        expect(res.text).to.contain('Topping:');
+        expect(res.text).to.contain('Price:');
+        done();
+      });
   });
 });
 

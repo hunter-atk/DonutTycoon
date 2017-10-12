@@ -1,0 +1,29 @@
+<%- include ../partials/mainHead.ejs %>
+
+<h2>Create a New Employee</h2>
+<form class="" method="post" action="/donuts">
+  <div class="row">
+    <div class="input-field col s4">
+      <label for="name">Name:</label>
+      <input type="text" name="name" placeholder="">
+    </div>
+    <div class="input-field col s4">
+      <label for="topping">Topping:</label>
+      <input type="text" name="topping" placeholder="">
+    </div>
+    <div class="input-field col s4">
+      <label for="price">Price:</label>
+      <input type="number" name="price" placeholder="">
+    </div>
+  </div>
+  <div class="row">
+    <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">create</i>Create</button>
+    <a href="/donuts" class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a>
+  </div>
+</form>
+
+<% if (error) { %>
+  <p><%= error %></p>
+<% } %>
+
+<%- include ../partials/mainFoot.ejs %>

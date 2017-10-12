@@ -110,14 +110,67 @@ describe("GET /donuts/new", function() {
   });
 });
 
-describe("DELETE /donuts", function() {
-  it('', function(done) {
-    expect().to.equal();
+describe("POST /donuts", function() {
+  it.only('creates a new donut in the database', function(done) {
+    request.post('/donuts')
+      .send({
+        name: 'The Baconator',
+        topping: 'Bacon bits',
+        price: 100
+      })
+      .end(function(err, res) {
+        if (err) throw err;
+        knex('donuts')
+          .where({name: 'The Baconator'})
+          .first()
+          .then((donut) => {
+            expect(donut.topping).to.equal('Bacon bits');
+            expect(donut.price).to.equal(100);
+            done();
+          });
+      });
+  });
+
+  it.only('redirects to the new donut show page', function(done) {
+    request.post('/donuts')
+      .send({
+        name: 'The Baconator',
+        topping: 'Exactly what you think - bacon, and bacon bits',
+        price: 1000
+      })
+      .expect('Content-Type', /text\/plain/)  // based on redirect
+      .expect(302)
+      .expect('Location', '/donuts/5')  // redirect to the show page for edited donut
+      .end(function(err, res) {
+        if (err) throw err;
+        done();
+      });
   });
 });
 
-describe("POST /donuts", function() {
-  it('', function(done) {
-    expect().to.equal();
+describe("DELETE /donuts", function() {
+  it.only('deletes a donut from the database', function(done) {
+    request.delete('/donuts/3')
+      .end(function(err, res) {
+        if (err) throw err;
+        knex('donuts')
+          .where({id: 3})
+          .first()
+          .then((donut) => {
+            expect(donut).to.be.undefined;
+            done();
+          });
+    });
+  });
+
+  it.only('redirects to the donuts index page', function(done) {
+    request.delete('/donuts/2')
+      .expect('Content-Type', /text\/plain/)  // based on redirect
+      .expect(302)
+      .expect('Location', '/donuts')  // redirect to the show page for edited donut
+      .end(function(err, res) {
+        if (err) throw err;
+        done();
+      });
   });
 });

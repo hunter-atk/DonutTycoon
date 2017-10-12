@@ -20,6 +20,21 @@ router.route('/')
     knex('donuts')
       .then(donuts => res.status(200).render('donuts/index', {donuts}))
       .catch(err => next(err));
+  })
+  .post((req, res, next) => {
+    if (req.body.name && req.body.topping && parseInt(req.body.price)) {
+      let newDonut = {
+        name: req.body.name,
+        topping: req.body.topping,
+        price: parseInt(req.body.price)
+      };
+      knex('donuts')
+      .insert(newDonut, '*')
+      .then((donut) => res.redirect(`/donuts/${donut[0].id}`))
+      .catch(err => next(err));
+    } else {
+      res.status(200).render('donuts/new', {error: 'Please be sure to fill out all required fields'});
+    }
   });
 
 router.route('/new')
@@ -50,6 +65,14 @@ router.route('/:id')
       .first()
       .update(req.body)
       .then(() => res.status(204).redirect(`/donuts/${req.params.id}`))
+      .catch(err => next(err));
+  })
+  .delete((req, res, next) => {
+    knex('donuts')
+      .where({id: req.params.id})
+      .first()
+      .del()
+      .then(() => res.status(201).redirect('/donuts'))
       .catch(err => next(err));
   });
 

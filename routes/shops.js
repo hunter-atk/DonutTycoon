@@ -27,9 +27,9 @@ router.post('/', (req, res, next) => {
       .insert({
         name: req.body.name,
         city: req.body.city
-      })
-      .then(() => {
-        res.redirect('/shops');
+      }, '*')
+      .then((newShop) => {
+        res.redirect(`/shops/${newShop[0].id}`);
       })
       .catch((err) => {
         next(err);

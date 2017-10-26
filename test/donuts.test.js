@@ -19,7 +19,7 @@ beforeEach(function(done) {
 });
 
 describe("GET /donuts", function() {
-  it.only('should return all donuts', function(done) {
+  it('should return all donuts', function(done) {
     request.get('/donuts')
       .expect('Content-Type', /text\/html/)
       .expect(200)
@@ -34,7 +34,7 @@ describe("GET /donuts", function() {
 });
 
 describe("GET /donuts/:id", function() {
-  it.only('should return a single donut based on id', function(done) {
+  it('should return a single donut based on id', function(done) {
     request.get('/donuts/1')
       .expect('Content-Type', /text\/html/)
       .expect(200)
@@ -49,7 +49,7 @@ describe("GET /donuts/:id", function() {
 });
 
 describe("GET /donuts/:id/edit", function() {
-  it.only('should render the edit form for a given donut', function(done) {
+  it('should render the edit form for a given donut', function(done) {
     request.get('/donuts/2/edit')
       .expect('Content-Type', /text\/html/)
       .expect(200)
@@ -65,7 +65,7 @@ describe("GET /donuts/:id/edit", function() {
 });
 
 describe("PATCH /donuts/:id", function() {
-  it.only('should update the database for changes made to entry', function(done) {
+  it('should update the database for changes made to entry', function(done) {
     request.patch('/donuts/3')
       .send({ name: 'Eclair', topping: 'Chocolate fudge pudding', price: 440})
       .end(function(err, res) {
@@ -82,7 +82,7 @@ describe("PATCH /donuts/:id", function() {
       });
   });
 
-  it.only('should redirect to show page for updated donut', function(done) {
+  it('should redirect to show page for updated donut', function(done) {
     request.patch('/donuts/3')
       .send({ name: 'Eclair', topping: 'Chocolate fudge pudding', price: 440})
       .expect('Content-Type', /text\/plain/)  // based on redirect
@@ -96,7 +96,7 @@ describe("PATCH /donuts/:id", function() {
 });
 
 describe("GET /donuts/new", function() {
-  it.only('returns the new donut form', function(done) {
+  it('returns the new donut form', function(done) {
     request.get('/donuts/new')
       .expect('Content-Type', /text\/html/)
       .expect(200)
@@ -111,7 +111,7 @@ describe("GET /donuts/new", function() {
 });
 
 describe("POST /donuts", function() {
-  it.only('creates a new donut in the database', function(done) {
+  it('creates a new donut in the database', function(done) {
     request.post('/donuts')
       .send({
         name: 'The Baconator',
@@ -131,7 +131,7 @@ describe("POST /donuts", function() {
       });
   });
 
-  it.only('redirects to the new donut show page', function(done) {
+  it('redirects to the new donut show page', function(done) {
     request.post('/donuts')
       .send({
         name: 'The Baconator',
@@ -149,7 +149,7 @@ describe("POST /donuts", function() {
 });
 
 describe("DELETE /donuts", function() {
-  it.only('deletes a donut from the database', function(done) {
+  it('deletes a donut from the database', function(done) {
     request.delete('/donuts/3')
       .end(function(err, res) {
         if (err) throw err;
@@ -163,7 +163,7 @@ describe("DELETE /donuts", function() {
     });
   });
 
-  it.only('redirects to the donuts index page', function(done) {
+  it('redirects to the donuts index page', function(done) {
     request.delete('/donuts/2')
       .expect('Content-Type', /text\/plain/)  // based on redirect
       .expect(302)

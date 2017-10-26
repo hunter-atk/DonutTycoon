@@ -1,9 +1,30 @@
 <%- include ../partials/mainHead.ejs %>
 
-<h2><%= shop.name %></h2>
-<p>id: <%= shop.id %></p>
-<p>city: <%= shop.city %></p>
+<h2><%= shop.name %>, <%= shop.city %></h2>
+
+<table>
+  <caption>Menu</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Topping</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% donuts.forEach(function(donut) { %>
+    <tr>
+      <td><a class="collection-item" href="/donuts/<%= donut.id %>"><%= donut.name %></a></td>
+      <td><%= donut.topping %></td>
+      <td>$<%= donut.price %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
 <a href="/shops" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to All Shops</a>
+<a href="#" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add a New Donut</a>
+
 <a href="<%= shop.id %>/edit" class="waves-effect waves-light btn"><i class="material-icons left">edit</i>Edit</a>
 <!-- Modal Trigger -->
 <a class="waves-effect waves-light btn modal-trigger" href="#modal"><i class="material-icons left">delete</i>Delete</a>

@@ -44,6 +44,33 @@ router.get('/new', (req, res, next) => {
   res.render('shops/new', {error: ''});
 });
 
+
+
+router.get('/:id/donuts', (req, res, next) => {
+  knex('shops_donuts')
+    .join('donuts', 'shops_donuts.donut_id', 'donuts.id')
+    .where('shops_donuts.shop_id', req.params.id)
+    .select('*')
+    .then((donuts) => {
+      res.status(200).json(donuts);
+    })
+    .catch(err => next(err));
+});
+
+router.get('/:id/edit', (req, res, next) => {
+  knex('shops')
+  .where({
+    id: req.params.id
+  })
+  .first()
+  .then((shop) => {
+    res.status(200).render('shops/edit', {shop});
+  })
+  .catch((err) => {
+    next(err);
+  });
+});
+
 router.get('/:id', (req, res, next) => {
   knex('shops')
   .where({
@@ -51,7 +78,15 @@ router.get('/:id', (req, res, next) => {
   })
   .first() // NEED TO DO FIRST - to get from array to object
   .then((shop) => {
-    res.status(200).render('shops/show', {shop});
+
+    knex('shops_donuts')
+    .join('donuts', 'shops_donuts.donut_id', 'donuts.id')
+    .where('shops_donuts.shop_id', req.params.id)
+    .select('*')
+    .then((donuts) => {
+      res.status(200).render('shops/show', {shop, donuts});
+    })
+    .catch(err => next(err));
   })
   .catch((err) => {
     next(err);
@@ -74,19 +109,6 @@ router.patch('/:id', (req, res, next) => {
     });
 });
 
-router.get('/:id/edit', (req, res, next) => {
-  knex('shops')
-    .where({
-      id: req.params.id
-    })
-    .first()
-    .then((shop) => {
-      res.status(200).render('shops/edit', {shop});
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
 
 router.delete('/:id', (req, res, next) => {
   knex('shops')

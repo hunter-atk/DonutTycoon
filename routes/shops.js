@@ -45,6 +45,28 @@ router.get('/new', (req, res, next) => {
 });
 
 
+router.get('/:id/addinventory', (req, res, next) => {
+  knex('donuts').orderBy('id')
+  .then(donuts => res.render('shops/addinventory', {donuts, id: req.params.id}))
+  .catch(err => next(err));
+});
+
+router.post('/:id/addinventory', (req, res, next) => {
+  if (Array.isArray(req.body.donut_ids)) {
+    req.body.donut_ids.forEach(id => {
+      knex('shops_donuts')
+        .insert({shop_id: req.params.id, donut_id: id})
+        .then(() => null)
+        .catch(err => next(err));
+    })
+    res.redirect(`/shops/${req.params.id}`)
+  } else {
+    knex('shops_donuts')
+      .insert({shop_id: req.params.id, donut_id: req.body.donut_ids})
+      .then(() => res.redirect(`/shops/${req.params.id}`))
+      .catch(err => next(err));
+  }
+});
 
 router.get('/:id/donuts', (req, res, next) => {
   knex('shops_donuts')

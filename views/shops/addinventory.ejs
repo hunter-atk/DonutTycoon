@@ -1,0 +1,21 @@
+<%- include ../partials/mainHead.ejs %>
+
+<h2>Add a new donut to the inventory</h2>
+<form class="" method="post" action="/shops/<%= id %>/addinventory">
+  <div class="input-field col s12">
+    <select multiple name="donut_ids">
+      <option value="" disabled selected>Choose donuts</option>
+      <% donuts.forEach(function(donut) { %>
+        <option value="<%= donut.id %>"><%= donut.name %></option>
+      <% }) %>
+    </select>
+    <label>Select Donuts to Add</label>
+  </div>
+  <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">create</i>Create</button>
+  <a href="/shops/<%= id %>/" class="waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancel</a>
+</form>
+
+
+
+
+<%- include ../partials/mainFoot.ejs %>

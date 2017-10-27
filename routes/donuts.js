@@ -2,7 +2,11 @@
 const express = require('express');
 const router = express.Router();
 
+// TODO - DELETE
 const knex = require('../db/knex');
+
+const donuts = require('../controllers/donuts');
+
 
 router.get('/json', (req, res, next) => {
   knex('donuts')
@@ -16,11 +20,7 @@ router.get('/json', (req, res, next) => {
 });
 
 router.route('/')
-  .get((req, res, next) => {
-    knex('donuts')
-      .then(donuts => res.status(200).render('donuts/index', {donuts}))
-      .catch(err => next(err));
-  })
+  .get(donuts.index)
   .post((req, res, next) => {
     if (req.body.name && req.body.topping && parseInt(req.body.price)) {
       let newDonut = {
@@ -68,12 +68,18 @@ router.route('/:id')
       .catch(err => next(err));
   })
   .delete((req, res, next) => {
-    knex('donuts')
-      .where({id: req.params.id})
-      .first()
-      .del()
-      .then(() => res.status(201).redirect('/donuts'))
-      .catch(err => next(err));
+    knex('employees')
+      .where({favorite_donut: req.params.id})
+      .update({favorite_donut: null})
+      .then(() => {
+        knex('donuts')
+        .where({id: req.params.id})
+        .first()
+        .del()
+        .then(() => res.status(201).redirect('/donuts'))
+        .catch(err => next(err));
+      })
+
   });
 
 module.exports = router;

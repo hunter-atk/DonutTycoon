@@ -14,13 +14,17 @@ const ResourceFactory = table => ({
       return db(table).where({id}).first()
     },
 
-    update(id, newData) {
+    edit(id, newData) {
       return this.findById(id).update(newData)
     },
 
     destroy(id) {
       return this.findById(id).del();
     },
+
+    allJson() {
+      return db(table).orderBy('id')
+    }
 });
 
 module.exports = ResourceFactory;

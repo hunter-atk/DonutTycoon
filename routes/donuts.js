@@ -1,8 +1,7 @@
 const express = require('express');
-
-const router = express.Router();
 const donuts = require('../controllers/donuts');
 
+const router = express.Router();
 
 router.get('/json', donuts.json);
 

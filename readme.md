@@ -1,40 +1,51 @@
-
 # Donut Tycoon
-Express Knex CRUD /w optional TDD
+![landing page](./README/shops.png)
+A full stack app built in Javascript to simulate an inventory and employee management system for a small business.
 
------------------------
-### Contents
+Users can create shops, creating inventory items, and employees.
+<img src="./README/new_employee_form.png" alt="Drawing" style="width: 40%; display: inline; margin: 0 5px;"/>
+<img src="./README/new_shop_form.png" alt="Drawing" style="width: 40%; display: inline; margin: 0 5px;"/>
 
-#### [Plot](readme.md)
+Once created, the user can then manage those stories by editing employees and updating a given store's inventory.
+![shop info](./README/shop_info.png)
 
-#### [Getting Started](getting_started.md)
+![landing page](./README/add_donut.png)
 
-#### [Overview & Tables](overview.md)
+## Getting Started
+The project can be cloned locally, with the Postgres database setup and seeded via Knex:
 
-#### [Shop Routes and Pages](shop_routes_pages.md)
+```
+git clone https://github.com/wittrura/DonutTycoon.git
+cd DonutTycoon
+npm install
+knex migrate:latest
+knex seed:run
+npm start
+```
 
-#### [Donut Routes and Pages](donut_routes_pages.md)
--------------------------
+### Prerequisites
+PostgreSQL - after install, the script file will create the required databases in Postgres and seed the tables.
 
+### Installing
+Additional information regarding installing Postgres is available at [the Postgres website](https://www.postgresql.org/download/). There are both command line and GUI options.
 
-In this assessment, you'll build a RESTful, database-driven, HTTP server, using Express and Knex, to manage your migrated and seeded database.  You'll building this app using TDD!
-
-## Plot
-
-Congratulations! Your name was found in the will of a deceased donut tycoon.  Apparently she had no next of kin, and your name was the first result on google when she searched 'booyah'.  Naturally, she placed YOU as the heir to all of her donut shops before she passed.  Now the fate of 'dozens' of donut shops lies in your capable coding hands.  You must create an app that will allow you to manage your donut shops and keep track of employees. Donut let us down!
-
-
-**Time:** One to Multi-Day
-
-**Success Criteria:**
- - Build CRUD apps in Express
- - Access data using an ORM / Knex
- - Write tests in a TDD style using Mocha Chai
- - Design and implement schemas
- - Access data in datastores through joins
- - Design and implement a RESTful API
-
-#### [Next (Getting Started) ⇒](getting_started.md)
+## Running the tests
+Tests are set up in Mocha to validate API calls, and exectuded by running `npm test` in the terminal.
 
 
-![](http://i.giphy.com/BITvRdLetPEf6.gif)
+### Coding style tests
+Included linter follows the Airbnb JavaScript style guide
+
+## Deployment
+This project is currently set up to be deployed on Heroku, and a live link is included in the project description.
+
+To deploy, the [Heroku Postgres add-on](https://elements.heroku.com/addons/heroku-postgresql) must be installed on your dyno.
+
+## Built With
+* [Node](https://nodejs.org/en/) - Backend server
+* [Express](http://expressjs.com/) - Backend server, routing, middleware
+* [Knex](http://knexjs.org/) - SQL query builder
+* [PostgreSQL](https://www.postgresql.org/) - SQL database
+* [Mocha](https://mochajs.org/) - server-side API testing
+* [Chai](http://chaijs.com/) - BDD / TDD assertion library
+* [Airbnb](https://github.com/airbnb/javascript) - JavaScript style guide, for use with linter

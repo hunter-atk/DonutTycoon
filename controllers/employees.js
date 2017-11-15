@@ -53,7 +53,8 @@ const editPage = (req, res, next) => {
     .where('employees.id', req.params.eid)
     .first()
     .then((data) => {
-      rp('http://localhost:3000/donuts/json') // TODO - refactor to call db??
+      // TODO - refactor to call db
+      rp('http://localhost:3000/donuts/json')
         .then((htmlString) => {
           res.render(
             'employees/edit',
@@ -70,6 +71,7 @@ const editPage = (req, res, next) => {
 }
 
 const newPage = (req, res, next) => {
+  // TODO - refactor to call db
   rp('http://localhost:3000/donuts/json')
     .then((htmlString) => {
       res.render(
